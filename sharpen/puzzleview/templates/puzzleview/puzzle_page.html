@@ -1,0 +1,41 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'puzzleview/style.css' %}">
+<script type="text/javascript" src="{% static 'puzzleview/Compression.js' %}"></script>
+<script type="text/javascript" src="{% static 'puzzleview/puzpatcher.bundle.js' %}"></script>
+<script type="text/javascript" src="{% static 'puzzleview/puzzletools.js' %}"></script>
+<script type="text/javascript" src="{% static 'puzzleview/puzzleloader.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+<script type="text/javascript" src="{% static 'puzzleview/script.js' %}"></script>
+
+<h1 id="title">
+    {{ puzzle.title }} by <span id="setter">
+    {% if authors %}
+        {{ authors }}
+    {% else %}
+        Anonymous
+    {% endif %}
+    </span>
+</h1>
+{% if puzzle.puzzletype_set.all %}
+    {% for type in puzzle.puzzletype_set.all %}
+        <span class="puzzle_type">{{ type.puzzle_type.type  }}</span>
+    {% endfor %}
+{% else %}
+    <p>No type are listed.</p>
+{% endif %}
+
+<h2>Rules</h2>
+<div id="rules">
+    {{ puzzle.rules }}
+</div>
+
+<h2>Links</h2>
+{% if puzzle.link_set.all %}
+    <ul>
+    {% for link in puzzle.link_set.all %}
+        <li><a href="{{ link.url }}">{{ link.url }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No link are available.</p>
+{% endif %}
